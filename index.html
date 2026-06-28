@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Video Save Center</title>
+    <meta
+      name="description"
+      content="A permission-aware video save website for direct video links and platform export workflows."
+    >
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar" aria-label="Primary">
+        <a class="brand" href="#download-tool" aria-label="Video Save Center home">
+          <span class="brand-mark">V</span>
+          <span>Video Save Center</span>
+        </a>
+        <nav class="top-actions" aria-label="Page controls">
+          <a class="ghost-link" href="#platforms">Platforms</a>
+          <button class="icon-button" id="themeToggle" type="button" aria-label="Toggle theme">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3v2m0 14v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M3 12h2m14 0h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+              <circle cx="12" cy="12" r="4"></circle>
+            </svg>
+          </button>
+        </nav>
+      </header>
+
+      <main>
+        <section class="tool-hero" id="download-tool" aria-labelledby="pageTitle">
+          <div class="hero-media" aria-hidden="true"></div>
+          <div class="hero-content">
+            <div class="hero-copy">
+              <p class="eyebrow">YT, Instagram, Facebook, Snap, TikTok, X and more</p>
+              <h1 id="pageTitle">Save permitted videos from one clean workspace.</h1>
+              <p class="hero-subtitle">
+                Direct media links can download in the browser. Platform links are checked and routed
+                to a permission-friendly save flow.
+              </p>
+            </div>
+
+            <form class="download-form" id="downloadForm">
+              <label class="field-label" for="videoUrl">Video URL</label>
+              <div class="url-row">
+                <input
+                  id="videoUrl"
+                  name="videoUrl"
+                  type="text"
+                  inputmode="url"
+                  autocomplete="off"
+                  placeholder="Paste a video page or direct .mp4 link"
+                  aria-describedby="permissionText"
+                  required
+                >
+                <button class="secondary-button" id="pasteButton" type="button">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="8" y="7" width="10" height="13" rx="2"></rect>
+                    <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"></path>
+                    <path d="M6 17H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h1"></path>
+                  </svg>
+                  <span>Paste</span>
+                </button>
+                <button class="primary-button" type="submit">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M21 21l-4.35-4.35"></path>
+                    <circle cx="11" cy="11" r="7"></circle>
+                  </svg>
+                  <span>Analyze</span>
+                </button>
+              </div>
+              <label class="permission" id="permissionText">
+                <input id="permissionCheck" type="checkbox">
+                <span>I own this video or have permission to save it.</span>
+              </label>
+              <div class="quick-platforms" id="quickPlatforms" aria-label="Supported quick filters"></div>
+            </form>
+          </div>
+        </section>
+
+        <section class="workspace" aria-label="Download workspace">
+          <section class="panel status-panel" aria-labelledby="statusTitle">
+            <div class="panel-head">
+              <div>
+                <p class="panel-kicker">Status</p>
+                <h2 id="statusTitle">Link inspector</h2>
+              </div>
+              <span class="status-pill" id="statusPill">
+                <span class="status-dot"></span>
+                Waiting
+              </span>
+            </div>
+
+            <div class="result-view">
+              <div class="platform-badge" id="platformBadge">URL</div>
+              <div>
+                <h3 id="resultTitle">Ready for a link</h3>
+                <p id="resultText">Paste a URL, confirm permission, and analyze it.</p>
+              </div>
+            </div>
+
+            <div class="action-bar">
+              <a class="primary-button disabled" id="downloadLink" href="#" aria-disabled="true">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 3v12"></path>
+                  <path d="m7 10 5 5 5-5"></path>
+                  <path d="M5 21h14"></path>
+                </svg>
+                <span>Download</span>
+              </a>
+              <button class="secondary-button" id="openSource" type="button" disabled>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M14 3h7v7"></path>
+                  <path d="M10 14 21 3"></path>
+                  <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path>
+                </svg>
+                <span>Open</span>
+              </button>
+              <button class="secondary-button" id="copyLink" type="button" disabled>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                  <rect x="2" y="2" width="13" height="13" rx="2"></rect>
+                </svg>
+                <span>Copy</span>
+              </button>
+            </div>
+
+            <dl class="metadata-grid">
+              <div>
+                <dt>Source</dt>
+                <dd id="metaSource">None</dd>
+              </div>
+              <div>
+                <dt>Format</dt>
+                <dd id="metaFormat">Unknown</dd>
+              </div>
+              <div>
+                <dt>File size</dt>
+                <dd id="metaSize">Not checked</dd>
+              </div>
+              <div>
+                <dt>Mode</dt>
+                <dd id="metaMode">Local page</dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="panel queue-panel" aria-labelledby="queueTitle">
+            <div class="panel-head">
+              <div>
+                <p class="panel-kicker">Batch</p>
+                <h2 id="queueTitle">Save queue</h2>
+              </div>
+              <button class="icon-button" id="clearQueue" type="button" aria-label="Clear queue">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M3 6h18"></path>
+                  <path d="M8 6V4h8v2"></path>
+                  <path d="m19 6-1 14H6L5 6"></path>
+                  <path d="M10 11v5"></path>
+                  <path d="M14 11v5"></path>
+                </svg>
+              </button>
+            </div>
+
+            <label class="field-label" for="batchInput">Batch links</label>
+            <textarea
+              id="batchInput"
+              rows="5"
+              placeholder="Add one URL per line"
+              spellcheck="false"
+            ></textarea>
+
+            <div class="batch-actions">
+              <button class="secondary-button" id="addBatch" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 5v14"></path>
+                  <path d="M5 12h14"></path>
+                </svg>
+                <span>Add</span>
+              </button>
+              <button class="secondary-button" id="downloadDirect" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 3v12"></path>
+                  <path d="m7 10 5 5 5-5"></path>
+                  <path d="M4 20h16"></path>
+                </svg>
+                <span>Direct files</span>
+              </button>
+            </div>
+
+            <div class="queue-list" id="queueList" aria-live="polite"></div>
+          </section>
+        </section>
+
+        <section class="platform-section" id="platforms" aria-labelledby="platformTitle">
+          <div class="section-head">
+            <p class="panel-kicker">Coverage</p>
+            <h2 id="platformTitle">Popular sources</h2>
+          </div>
+          <div class="platform-grid" id="platformGrid"></div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <span>Built for lawful downloads.</span>
+        <span>No private scraping, sign-in bypass, DRM removal, or protected-content extraction.</span>
+      </footer>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./script.js"></script>
+  </body>
+</html>
